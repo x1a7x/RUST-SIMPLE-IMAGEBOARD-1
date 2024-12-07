@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="logo">Rust Simple Imageboard 1</div>
+<hr>
+
+<!-- Create Thread Form -->
+<div id="post-form-container">
+    <form class="postform" action="/thread" method="post" enctype="multipart/form-data">
+        <input type="text" id="title" name="title" maxlength="75" placeholder="Title" required aria-label="Title">
+
+        <textarea id="message" name="message" rows="4" maxlength="8000" placeholder="Message" required aria-label="Message"></textarea>
+
+        <label for="image">Upload JPEG Image (optional):</label>
+        <input type="file" id="image" name="image" accept="image/jpeg">
+
+        <input type="submit" value="Create Thread">
+    </form>
+</div>
+<hr>
+
+<!-- Thread List -->
+<div class="postlists">
+    {% for thread in threads %}
+        <div class="post thread-post">
+            {% if thread.image_url.is_some() %}
+                <div class="post-image">
+                    <img src="{{ thread.image_url.as_ref().unwrap() }}" alt="Thread Image" class="expandable-image">
+                </div>
+            {% endif %}
+            <div class="post-content">
+                <div class="post-header">
+                    <span class="title">{{ thread.title }}</span>
+                    <a href="/thread/{{ thread.id }}" class="reply-link">Reply</a>
+                </div>
+                <div class="message">{{ thread.message }}</div>
+            </div>
+        </div>
+    {% else %}
+        <p>No threads found. Be the first to create one!</p>
+    {% endfor %}
+</div>
+
+<!-- Pagination Controls -->
+<div class="pagination">
+    {% if current_page > 1 %}
+        <a href="/?page={{ current_page - 1 }}">Previous</a>
+    {% endif %}
+
+    {% for page in 1..=total_pages %}
+        {% if page == current_page %}
+            <span class="current">{{ page }}</span>
+        {% else %}
+            <a href="/?page={{ page }}">{{ page }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if current_page < total_pages %}
+        <a href="/?page={{ current_page + 1 }}">Next</a>
+    {% endif %}
+</div>
+
+<div class="footer">
+    - Powered by Rust and Actix Web -
+</div>
+{% endblock %}

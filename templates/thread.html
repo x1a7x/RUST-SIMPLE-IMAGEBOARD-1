@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Reply Mode Label -->
+<div class="replymode">
+    <strong>Reply Mode</strong> | <a href="/">Back to Main Board</a>
+</div>
+<br>
+
+<!-- Reply Form -->
+<div class="postarea-container">
+    <form class="postform" action="/reply" method="post">
+        <input type="hidden" name="parent_id" value="{{ thread.id }}">
+        
+        <textarea id="message" name="message" rows="4" maxlength="8000" placeholder="Message" required aria-label="Message"></textarea>
+
+        <input type="submit" value="Reply">
+    </form>
+</div>
+<br>
+
+<!-- Main Thread -->
+<div class="post thread-post">
+    {% if thread.image_url.is_some() %}
+        <div class="post-image">
+            <img src="{{ thread.image_url.as_ref().unwrap() }}" alt="Thread Image" class="expandable-image">
+        </div>
+    {% endif %}
+    <div class="post-content">
+        <div class="post-header">
+            <span class="title">{{ thread.title }}</span>
+            <!-- Reply Link Removed -->
+        </div>
+        <div class="message">{{ thread.message }}</div>
+    </div>
+</div>
+<hr>
+
+<!-- Replies -->
+<div class="postlists">
+    {% for reply in replies %}
+        <div class="post reply-post">
+            <div class="post-content">
+                <div class="post-header">
+                    <span class="title">Reply {{ reply.id }}</span>
+                </div>
+                <div class="message">{{ reply.message }}</div>
+            </div>
+        </div>
+    {% else %}
+        <p>No replies yet. Be the first to reply!</p>
+    {% endfor %}
+</div>
+
+<div class="footer">
+    - Powered by Rust and Actix Web -
+</div>
+{% endblock %}
