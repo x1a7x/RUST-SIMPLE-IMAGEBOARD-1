@@ -4,6 +4,9 @@
 
 Sick of crap imageboards on git? ME TOO! Heck, even the ones so far made in rust are hard to install, out of date and not complete. Well, enough of that nonsense!
 
+
+This is set to port 8080. 
+
 Upload all the files to the web, compile it and run it. No bs setup, no tinkering. Bam! 
 
 This runs off the sled db, which is made in rust and for rust. NO config- just run it. 
