@@ -10,3 +10,4 @@ This is set to port 8080.
 Upload all the files to the web, compile it and run it. No bs setup, no tinkering. Bam! 
 
 This runs off the sled db, which is made in rust and for rust. NO config- just run it. 
+Need an admin area? Think again. Just make a .sh script to handle any admin task you might need to do. Having a front facing admin area is just stupid. Rust IS SECURE but if you create your own security holes, that is just silly!! 
